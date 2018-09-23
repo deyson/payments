@@ -38,10 +38,13 @@ class VerifyCard extends Component {
 
     handleVerifyCard = (event) => {
         event.preventDefault();
-        
+        debugger;
         const { uid, transactionId } = this.props;
         console.log(uid);
         console.log(transactionId);
+
+        axios.defaults.headers.common['Authorization'] = '';
+        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
         axios.post('https://ccapi-stg.paymentez.com/v2/transaction/verify', {
             "user": {
