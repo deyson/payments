@@ -1,22 +1,11 @@
 
-function paymentezClientApplicationCode() {
-    return "EXITO-CO-CLIENT";
-}
-function paymentezClientAppKey() {
-    return "L0KxqMO32mRSBZkzkY71hG4dUWwPLM";
+const Utils =
+{
+    paymentezClientApplicationCode: 'EXITO-CO-CLIENT',
+    paymentezClientAppKey: 'L0KxqMO32mRSBZkzkY71hG4dUWwPLM',
+    paymentezServerApplicationCode: 'EXITO-CO-SERVER',
+    paymentezServerAppKey: 'cvNBJXzsdcH4qpgLq7tlkdtaclIvp2'
+
 }
 
-function paymentezServerApplicationCode() {
-    return "EXITO-CO-SERVER";
-}
-function paymentezServerAppKey() {
-    return "cvNBJXzsdcH4qpgLq7tlkdtaclIvp2";
-}
-module.exports =
-    {
-        paymentezClientApplicationCode,
-        paymentezClientAppKey,
-        paymentezServerApplicationCode,
-        paymentezServerAppKey
-
-    }
+export default Utils;
