@@ -40,12 +40,25 @@ class AddCard extends Component {
             return;
         }
 
-        Paymentez.addCard(this.state.uid, this.state.email, cardToSave, this.successHandler, this.errorHandler);
+        Paymentez.addCard(
+            this.state.uid,
+            this.state.email,
+            cardToSave,
+            this.successHandler,
+            this.errorHandler
+        );
     }
 
     successHandler = (cardResponse) => {
         console.log(cardResponse.card);
-        this.setCookie(cardResponse.card);
+        if (cardResponse.card.status === 'valid') {
+            this.props.openModal({
+                uid: this.state.uid,
+                transactionId: cardResponse.card.transaction_reference,
+            });
+        } else {
+            this.setCookie(cardResponse.card);
+        }
     }
 
     errorHandler = (err) => {
@@ -53,7 +66,7 @@ class AddCard extends Component {
         this.setCookie(err.error);
     }
 
-    setCookie = (response) => { 
+    setCookie = (response) => {
         const cardResponse = {
             uid: this.state.uid,
             response,

@@ -10,6 +10,16 @@ import { CookiesProvider } from 'react-cookie';
 class Home extends Component {
     state = {
         modalVisible: false,
+        uid: '',
+        transactionId: '',
+    }
+    handleOpenModal = (cardResponse) => {
+        debugger
+        this.setState({
+          modalVisible: true,
+          uid: cardResponse.uid,
+          transactionId: cardResponse.transactionId,
+        })
     }
     handleCloseModal = (event) => {
         this.setState({
@@ -20,14 +30,16 @@ class Home extends Component {
         return (<CookiesProvider>
             <HandleError>
                 <HomeLayout>
-                    <AddCard />
+                    <AddCard openModal={this.handleOpenModal} />
                     {
                         this.state.modalVisible &&
                         <ModalContainer>
                             <Modal
                                 handleClick={this.handleCloseModal}
                             >
-                                <VerifyCard />
+                                <VerifyCard 
+                                    uid={this.state.uid} 
+                                    transactionId={this.state.transactionId} />
                             </Modal>
                         </ModalContainer>
                     }
