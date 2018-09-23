@@ -5,10 +5,11 @@ import Modal from '../../widgets/components/modal';
 import HandleError from '../../error/containers/handle-error';
 import AddCard from '../../payments/containers/add-card'
 import VerifyCard from '../../payments/containers/verify-card';
+import { CookiesProvider } from 'react-cookie';
 
 class Home extends Component {
     state = {
-        modalVisible: false,
+        modalVisible: true,
     }
     handleCloseModal = (event) => {
         this.setState({
@@ -16,7 +17,7 @@ class Home extends Component {
         })
     }
     render() {
-        return (
+        return (<CookiesProvider>
             <HandleError>
                 <HomeLayout>
                     <AddCard />
@@ -32,6 +33,7 @@ class Home extends Component {
                     }
                 </HomeLayout>
             </HandleError>
+        </CookiesProvider>
         )
     }
 }
