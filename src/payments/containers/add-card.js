@@ -7,6 +7,9 @@ class AddCard extends Component {
         uid: '',
         email: ''
     }
+    componentWillMount() {
+        window.Paymentez.init('stg', 'EXITO-CO-CLIENT', 'L0KxqMO32mRSBZkzkY71hG4dUWwPLM');
+      }
     componentDidMount() {
         console.log(location.search);
         const parsed = QueryString.parse(location.search);
