@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import VerifyCardLayout from '../components/verify-card';
 import { instanceOf, element, PropTypes } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import QueryString from 'query-string';
 import axios from 'axios'
 import Utils from '../../settings/util';
 
@@ -20,16 +19,13 @@ class VerifyCard extends Component {
     };
 
     componentDidMount() {
-        
-        const parsed = QueryString.parse(location.search);
-        const { cookies } = this.props;
+
+        const { cookies, uid, transactionId, } = this.props;
         this.setState({
-            uid: parsed.uid,
-            email: parsed.email,
+            uid,
+            transactionId,
             cookies,
         })
-
-
 
     }
     setInputRef = element => {
@@ -38,14 +34,16 @@ class VerifyCard extends Component {
 
     handleVerifyCard = (event) => {
         event.preventDefault();
-        debugger;
-        const { uid, transactionId } = this.props;
+
+         const { uid, transactionId } = this.state;
         console.log(uid);
         console.log(transactionId);
 
-        axios.defaults.headers.common['Authorization'] = '';
-        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        let auth = Paymentez.getAuthToken('EXITO-CO-SERVER', 'cvNBJXzsdcH4qpgLq7tlkdtaclIvp2')
 
+        axios.defaults.headers.common['Auth-Token'] = auth;
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+        debugger;
         axios.post('https://ccapi-stg.paymentez.com/v2/transaction/verify', {
             "user": {
                 "id": uid
@@ -56,8 +54,8 @@ class VerifyCard extends Component {
             "type": "BY_AMOUNT",
             "value": this.input.value
         })
-            .then(function (response) {
-                const { cookies, uid } = this.props;
+            .then(response => {
+                const { cookies, uid } = this.state;
 
                 const cardResponse = {
                     uid,
@@ -66,12 +64,13 @@ class VerifyCard extends Component {
 
                 cookies.set('cardResponse', cardResponse, { path: '/' });
             })
-            .catch(function (error) {
-                const { cookies, uid } = this.props;
+            .catch(error => {
+                debugger;
+                const { cookies, uid } = this.state;
 
                 const cardResponse = {
                     uid,
-                    response: error,
+                    response: error.response.data.error,
                 }
 
                 cookies.set('cardResponse', cardResponse, { path: '/' });
