@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import QueryString from 'query-string';
-import saveCookie from '../../settings/cookies';
+
 
 class VerifyCard extends Component {
     state = {
@@ -31,7 +31,7 @@ class VerifyCard extends Component {
 
     save = (e) => {
         
-        saveCookie(this.state);
+        
         e.preventDefault();
       }
     
