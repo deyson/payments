@@ -7,8 +7,7 @@ function AddCardLayout(props) {
         <div>
             <form id="add-card-form">
                 <div className="paymentez-form" id="my-card" data-capture-name="true" />
-                <button className="btn">Save</button>
-
+                <button className="btn" onClick={props.handleClick} >{props.saveTitle}</button>
             </form>
         </div>
     )
