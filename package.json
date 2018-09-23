@@ -38,6 +38,7 @@
     "webpack-dev-server": "2.9.3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "eslint": "^5.5.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.1.0",
