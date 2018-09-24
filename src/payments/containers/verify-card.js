@@ -34,17 +34,17 @@ class VerifyCard extends Component {
 
     handleVerifyCard = (event) => {
         event.preventDefault();
-
-         const { uid, transactionId } = this.state;
+        
+        const { uid, transactionId } = this.state;
         console.log(uid);
         console.log(transactionId);
 
-        let auth = Paymentez.getAuthToken('EXITO-CO-SERVER', 'cvNBJXzsdcH4qpgLq7tlkdtaclIvp2')
+        let auth = Paymentez.getAuthToken(Utils.paymentezClientApplicationCode, Utils.paymentezServerAppKey)
 
         axios.defaults.headers.common['Auth-Token'] = auth;
         axios.defaults.headers.post['Content-Type'] = 'application/json';
-        debugger;
-        axios.post('https://ccapi-stg.paymentez.com/v2/transaction/verify', {
+        
+        axios.post(Utils.urlValidate, {
             "user": {
                 "id": uid
             },
@@ -65,7 +65,7 @@ class VerifyCard extends Component {
                 cookies.set('cardResponse', cardResponse, { path: '/' });
             })
             .catch(error => {
-                debugger;
+                
                 const { cookies, uid } = this.state;
 
                 const cardResponse = {
