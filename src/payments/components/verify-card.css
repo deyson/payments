@@ -1,0 +1,60 @@
+.VerifyCard{
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.VerifyCard h1{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.VerifyCard-container{
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.VerifyCard-container p{
+    color: #555;
+}
+
+.VerifyCard-container label{
+    color: #000;
+    padding-bottom: 5px;
+}
+
+.VerifyCard-container input{
+    color: #676767;
+    font-size: 15px;
+    font-weight: 300;
+    height: 36px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    box-shadow: none;
+    background-color: #FDFDFD;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.VerifyCard-button{
+    font-family: 'Raleway', sans-serif;
+    
+    border: none;
+    font-size: 16px;
+    position: absolute;
+    right: 0;
+    bottom: 0;    
+    left: 0;
+    width: 100%;
+    height: 42px;
+}
+
+.VerifyCard-button-carulla{
+    background-color: #8dc63f;
+    color: #fff;
+}
+
+.VerifyCard-button-exito{
+    background-color: #FCEF02;
+    color: #000;
+}

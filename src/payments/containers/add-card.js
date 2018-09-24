@@ -9,6 +9,8 @@ class AddCard extends Component {
     state = {
         uid: '',
         email: '',
+        skin: '',
+        loaderVisible: false,
     }
 
     static propTypes = {
@@ -17,7 +19,7 @@ class AddCard extends Component {
 
     componentWillMount() {
         window.Paymentez.init(
-            Utils.enviroment,  //TODO:
+            Utils.enviroment,
             Utils.paymentezClientApplicationCode,
             Utils.paymentezClientAppKey
         );
@@ -28,6 +30,7 @@ class AddCard extends Component {
         this.setState({
             uid: parsed.uid,
             email: parsed.email,
+            skin: parsed.skin
         })
     }
 
@@ -47,14 +50,22 @@ class AddCard extends Component {
             this.successHandler,
             this.errorHandler
         );
+
+        this.setState({
+            loaderVisible: true,
+        })
     }
 
     successHandler = (cardResponse) => {
+        this.setState({
+            loaderVisible: false,
+        })
         console.log(cardResponse.card);
-        if (cardResponse.card.status === 'valid') {
+        if (cardResponse.card.status === 'valid') { //pending
             this.props.openModal({
                 uid: this.state.uid,
                 transactionId: cardResponse.card.transaction_reference,
+                skin: this.state.skin,
             });
         } else {
             this.setCookie(cardResponse.card);
@@ -62,6 +73,9 @@ class AddCard extends Component {
     }
 
     errorHandler = (err) => {
+        this.setState({
+            loaderVisible: false,
+        })
         console.log(err.error);
         this.setCookie(err.error);
     }
@@ -77,7 +91,12 @@ class AddCard extends Component {
 
     render() {
         return (
-            <AddCardLayout handleClick={this.handleAddCard} saveTitle="Guardar" />
+            <AddCardLayout 
+                handleClick={this.handleAddCard} 
+                saveTitle="Guardar" 
+                loaderVisible={this.state.loaderVisible}
+                skin={this.state.skin} 
+            />
         )
     }
 }

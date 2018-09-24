@@ -10,6 +10,8 @@ class VerifyCard extends Component {
         uid: '',
         cookies: '',
         value: '',
+        skin: '',
+        loaderVisible: false,
     }
 
     static propTypes = {
@@ -19,31 +21,54 @@ class VerifyCard extends Component {
     };
 
     componentDidMount() {
-
-        const { cookies, uid, transactionId, } = this.props;
+        const {
+            cookies,
+            uid,
+            transactionId,
+            skin,
+        } = this.props;
         this.setState({
             uid,
             transactionId,
             cookies,
+            skin,
         })
+        debugger
 
     }
+
+    componentWillReceiveProps(newProps){
+        debugger
+        this.setState({
+            uid: newProps.uid,
+            transactionId: newProps.transactionId,
+            skin: newProps.skin,
+        })
+    }
+
     setInputRef = element => {
         this.input = element;
     }
 
     handleVerifyCard = (event) => {
         event.preventDefault();
-        
+
+        this.setState({
+            loaderVisible: true,
+        })
+
         const { uid, transactionId } = this.state;
         console.log(uid);
         console.log(transactionId);
 
-        let auth = Paymentez.getAuthToken(Utils.paymentezClientApplicationCode, Utils.paymentezServerAppKey)
+        let auth = Paymentez.getAuthToken(
+            Utils.paymentezServerApplicationCode,
+            Utils.paymentezServerAppKey
+        )
 
         axios.defaults.headers.common['Auth-Token'] = auth;
         axios.defaults.headers.post['Content-Type'] = 'application/json';
-        
+
         axios.post(Utils.urlValidate, {
             "user": {
                 "id": uid
@@ -55,6 +80,11 @@ class VerifyCard extends Component {
             "value": this.input.value
         })
             .then(response => {
+
+                this.setState({
+                    loaderVisible: false,
+                })
+
                 const { cookies, uid } = this.state;
 
                 const cardResponse = {
@@ -63,9 +93,14 @@ class VerifyCard extends Component {
                 }
 
                 cookies.set('cardResponse', cardResponse, { path: '/' });
+                this.props.closeModal();
             })
             .catch(error => {
-                
+
+                this.setState({
+                    loaderVisible: false,
+                })
+
                 const { cookies, uid } = this.state;
 
                 const cardResponse = {
@@ -74,14 +109,20 @@ class VerifyCard extends Component {
                 }
 
                 cookies.set('cardResponse', cardResponse, { path: '/' });
+                this.props.closeModal();
             });
     }
 
-
     render() {
         return (
-            <VerifyCardLayout handleClick={this.handleVerifyCard} setRef={this.setInputRef}
-                saveTitle="Verificar" />
+            <VerifyCardLayout
+                handleClick={this.handleVerifyCard}
+                setRef={this.setInputRef}
+                saveTitle="Verificar"
+                loaderVisible={this.state.loaderVisible}
+                skin={this.state.skin}
+                closeModal={this.props.closeModal}
+            />
         )
     }
 }

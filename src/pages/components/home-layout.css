@@ -1,10 +1,9 @@
 body {
-    margin: 0;
-    font-family: Arial;
-    background: lightblue;
-  }
-  .HomeLayout {
-    display: flex;
-    margin: 0 auto;
-    min-height: 100vh;
-  }
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+.HomeLayout {
+  display: flex;
+  margin: 0 auto;
+  min-height: 100vh;
+}

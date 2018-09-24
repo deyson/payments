@@ -6,19 +6,22 @@ import HandleError from '../../error/containers/handle-error';
 import AddCard from '../../payments/containers/add-card'
 import VerifyCard from '../../payments/containers/verify-card';
 import { CookiesProvider } from 'react-cookie';
+import ModalAwesome from 'react-awesome-modal';
 
 class Home extends Component {
     state = {
         modalVisible: false,
         uid: '',
         transactionId: '',
+        skin: '',
     }
     handleOpenModal = (cardResponse) => {
         debugger
         this.setState({
-          modalVisible: true,
-          uid: cardResponse.uid,
-          transactionId: cardResponse.transactionId,
+            modalVisible: true,
+            uid: cardResponse.uid,
+            transactionId: cardResponse.transactionId,
+            skin: cardResponse.skin,
         })
     }
     handleCloseModal = (event) => {
@@ -27,25 +30,30 @@ class Home extends Component {
         })
     }
     render() {
-        return (<CookiesProvider>
-            <HandleError>
-                <HomeLayout>
-                    <AddCard openModal={this.handleOpenModal} />
-                    {
-                        this.state.modalVisible &&
-                        <ModalContainer>
-                            <Modal
-                                handleClick={this.handleCloseModal}
+        return (
+            <CookiesProvider>
+                <HandleError>
+                    <HomeLayout>
+                        <h1>{process.env.API_URL}</h1>
+                        <AddCard openModal={this.handleOpenModal} />
+                        {
+                            <ModalAwesome
+                                visible={this.state.modalVisible}
+                                width="400"
+                                height="300"
+                                effect="fadeInUp"
                             >
-                                <VerifyCard 
-                                    uid={this.state.uid} 
-                                    transactionId={this.state.transactionId} />
-                            </Modal>
-                        </ModalContainer>
-                    }
-                </HomeLayout>
-            </HandleError>
-        </CookiesProvider>
+                                <VerifyCard
+                                    uid={this.state.uid}
+                                    transactionId={this.state.transactionId}
+                                    skin={this.state.skin}
+                                    closeModal={this.handleCloseModal}
+                                />
+                            </ModalAwesome>
+                        }
+                    </HomeLayout>
+                </HandleError>
+            </CookiesProvider>
         )
     }
 }
