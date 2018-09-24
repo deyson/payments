@@ -33,12 +33,9 @@ class VerifyCard extends Component {
             cookies,
             skin,
         })
-        debugger
-
     }
 
     componentWillReceiveProps(newProps){
-        debugger
         this.setState({
             uid: newProps.uid,
             transactionId: newProps.transactionId,

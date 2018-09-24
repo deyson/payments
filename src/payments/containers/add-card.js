@@ -61,7 +61,7 @@ class AddCard extends Component {
             loaderVisible: false,
         })
         console.log(cardResponse.card);
-        if (cardResponse.card.status === 'valid') { //pending
+        if (cardResponse.card.status === 'pending') {
             this.props.openModal({
                 uid: this.state.uid,
                 transactionId: cardResponse.card.transaction_reference,

@@ -16,7 +16,6 @@ class Home extends Component {
         skin: '',
     }
     handleOpenModal = (cardResponse) => {
-        debugger
         this.setState({
             modalVisible: true,
             uid: cardResponse.uid,
