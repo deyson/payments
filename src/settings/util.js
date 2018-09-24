@@ -6,6 +6,7 @@ const Utils =
     paymentezServerApplicationCode: 'EXITO-CO-SERVER',
     paymentezServerAppKey: 'cvNBJXzsdcH4qpgLq7tlkdtaclIvp2',
     urlValidate:'https://ccapi-stg.paymentez.com/v2/transaction/verify',
+    enviroment:'stg',
 
 }
 

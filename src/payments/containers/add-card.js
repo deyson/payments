@@ -17,7 +17,7 @@ class AddCard extends Component {
 
     componentWillMount() {
         window.Paymentez.init(
-            'stg',  //TODO:
+            Utils.enviroment,  //TODO:
             Utils.paymentezClientApplicationCode,
             Utils.paymentezClientAppKey
         );
