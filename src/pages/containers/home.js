@@ -9,7 +9,7 @@ import { CookiesProvider } from 'react-cookie';
 
 class Home extends Component {
     state = {
-        modalVisible: true,
+        modalVisible: false,
         uid: '',
         transactionId: '',
     }
