@@ -3,7 +3,6 @@ import VerifyCardLayout from '../components/verify-card';
 import { instanceOf, element, PropTypes } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import axios from 'axios'
-import Utils from '../../settings/util';
 
 class VerifyCard extends Component {
     state = {
@@ -55,18 +54,16 @@ class VerifyCard extends Component {
         })
 
         const { uid, transactionId } = this.state;
-        console.log(uid);
-        console.log(transactionId);
 
         let auth = Paymentez.getAuthToken(
-            Utils.paymentezServerApplicationCode,
-            Utils.paymentezServerAppKey
+            PAYMENTEZ_SERVER_APPLICATION_CODE,
+            PAYMENTEZ_SERVER_APPLICATION_KEY
         )
 
         axios.defaults.headers.common['Auth-Token'] = auth;
         axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-        axios.post(Utils.urlValidate, {
+        axios.post(PAYMENTEZ_API_VERIFY_URL, {
             "user": {
                 "id": uid
             },

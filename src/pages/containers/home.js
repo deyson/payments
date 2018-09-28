@@ -33,7 +33,6 @@ class Home extends Component {
             <CookiesProvider>
                 <HandleError>
                     <HomeLayout>
-                        <h1>{process.env.API_URL}</h1>
                         <AddCard openModal={this.handleOpenModal} />
                         {
                             <ModalAwesome

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AddCardLayout from '../components/add-card';
 import QueryString from 'query-string';
-import Utils from '../../settings/util';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -19,9 +18,9 @@ class AddCard extends Component {
 
     componentWillMount() {
         window.Paymentez.init(
-            Utils.environment,
-            Utils.paymentezClientApplicationCode,
-            Utils.paymentezClientAppKey
+            PAYMENTEZ_ENVIRONMENT,
+            PAYMENTEZ_CLIENT_APPLICATION_CODE,
+            PAYMENTEZ_CLIENT_APPLICATION_KEY
         );
     }
 
@@ -60,7 +59,6 @@ class AddCard extends Component {
         this.setState({
             loaderVisible: false,
         })
-        console.log(cardResponse.card);
         if (cardResponse.card.status === 'pending') {
             this.props.openModal({
                 uid: this.state.uid,
@@ -76,7 +74,6 @@ class AddCard extends Component {
         this.setState({
             loaderVisible: false,
         })
-        console.log(err.error);
         this.setCookie(err.error);
     }
 

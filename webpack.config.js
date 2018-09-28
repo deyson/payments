@@ -1,16 +1,24 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const webpack = require('webpack');
 
 module.exports = (env) => {
   const plugins = [
-    new ExtractTextPlugin("css/[name].[hash].css")
+    new ExtractTextPlugin("css/[name].css"),
+    new webpack.DefinePlugin({
+      PAYMENTEZ_CLIENT_APPLICATION_CODE: JSON.stringify('EXITO-CO-CLIENT'),
+      PAYMENTEZ_CLIENT_APPLICATION_KEY: JSON.stringify('L0KxqMO32mRSBZkzkY71hG4dUWwPLM'),
+      PAYMENTEZ_SERVER_APPLICATION_CODE: JSON.stringify('EXITO-CO-SERVER'),
+      PAYMENTEZ_SERVER_APPLICATION_KEY: JSON.stringify('cvNBJXzsdcH4qpgLq7tlkdtaclIvp2'),
+      PAYMENTEZ_ENVIRONMENT: JSON.stringify('stg'),
+      PAYMENTEZ_API_VERIFY_URL: JSON.stringify('https://ccapi-stg.paymentez.com/v2/transaction/verify'),
+    }),
   ]
 
   if (env.NODE_ENV === 'production') {
     plugins.push(
-      new CleanWebpackPlugin(['dist'], {root: __dirname})
+      new CleanWebpackPlugin(['dist'], {root: __dirname}),
     )
   }
 
@@ -20,7 +28,7 @@ module.exports = (env) => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'js/[name].[hash].js',
+      filename: 'js/[name].js',
       publicPath: path.resolve(__dirname, 'dist')+"/",
       chunkFilename: 'js/[id].[chunkhash].js',
     },

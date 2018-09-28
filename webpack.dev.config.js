@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -12,6 +13,16 @@ module.exports = {
     port: 9000,
   },
   devtool: 'eval-source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      PAYMENTEZ_CLIENT_APPLICATION_CODE: JSON.stringify('EXITO-CO-CLIENT'),
+      PAYMENTEZ_CLIENT_APPLICATION_KEY: JSON.stringify('L0KxqMO32mRSBZkzkY71hG4dUWwPLM'),
+      PAYMENTEZ_SERVER_APPLICATION_CODE: JSON.stringify('EXITO-CO-SERVER'),
+      PAYMENTEZ_SERVER_APPLICATION_KEY: JSON.stringify('cvNBJXzsdcH4qpgLq7tlkdtaclIvp2'),
+      PAYMENTEZ_ENVIRONMENT: JSON.stringify('stg'),
+      PAYMENTEZ_API_VERIFY_URL: JSON.stringify('https://ccapi-stg.paymentez.com/v2/transaction/verify'),
+    }),
+  ],
   module: {
     rules: [
       {
