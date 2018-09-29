@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 module.exports = {
   entry: {
@@ -21,6 +23,44 @@ module.exports = {
       PAYMENTEZ_SERVER_APPLICATION_KEY: JSON.stringify('cvNBJXzsdcH4qpgLq7tlkdtaclIvp2'),
       PAYMENTEZ_ENVIRONMENT: JSON.stringify('stg'),
       PAYMENTEZ_API_VERIFY_URL: JSON.stringify('https://ccapi-stg.paymentez.com/v2/transaction/verify'),
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Exito - Carulla Payments (DEV)',
+      template: 'src/index.html',
+      filename: 'index.html',
+    }),
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: 'jquery',
+          entry: 'https://code.jquery.com/jquery-1.11.3.min.js',
+          global: 'jQuery',
+        },
+        {
+          module: 'paymentez-js',
+          entry: 'https://cdn.paymentez.com/js/ccapi/stg/paymentez.min.js',
+          global: 'paymentez-js',
+        },
+        {
+          module: 'google-raleway',
+          entry: {
+            path: 'https://fonts.googleapis.com/css?family=Raleway',
+            type: 'css',
+          },
+        },
+        {
+          module: 'paymentez-css',
+          entry: {
+            path: 'https://cdn.paymentez.com/js/ccapi/stg/paymentez.min.css',
+            type: 'css',
+          },
+        },
+        {
+          module: 'home-js',
+          entry: 'http://localhost:9000/js/home.js',
+          global: 'home-js',
+        },
+      ],
     }),
   ],
   module: {

@@ -2,9 +2,12 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 module.exports = (env) => {
   const plugins = [
+    new CleanWebpackPlugin(['dist'], {root: __dirname}),
     new ExtractTextPlugin("css/[name].css"),
     new webpack.DefinePlugin({
       PAYMENTEZ_CLIENT_APPLICATION_CODE: JSON.stringify('EXITO-CO-CLIENT'),
@@ -14,13 +17,39 @@ module.exports = (env) => {
       PAYMENTEZ_ENVIRONMENT: JSON.stringify('stg'),
       PAYMENTEZ_API_VERIFY_URL: JSON.stringify('https://ccapi-stg.paymentez.com/v2/transaction/verify'),
     }),
+    new HtmlWebpackPlugin({
+      title: 'Exito - Carulla Payments',
+      template: 'src/index.html',
+    }),
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: 'jquery',
+          entry: 'https://code.jquery.com/jquery-1.11.3.min.js',
+          global: 'jQuery',
+        },
+        {
+          module: 'paymentez-js',
+          entry: 'https://cdn.paymentez.com/js/ccapi/stg/paymentez.min.js',
+          global: 'paymentez-js',
+        },
+        {
+          module: 'google-raleway',
+          entry: {
+            path: 'https://fonts.googleapis.com/css?family=Raleway',
+            type: 'css',
+          },
+        },
+        {
+          module: 'paymentez-css',
+          entry: {
+            path: 'https://cdn.paymentez.com/js/ccapi/stg/paymentez.min.css',
+            type: 'css',
+          },
+        },
+      ],
+    }),
   ]
-
-  if (env.NODE_ENV === 'production') {
-    plugins.push(
-      new CleanWebpackPlugin(['dist'], {root: __dirname}),
-    )
-  }
 
   return {
     entry: {
@@ -40,8 +69,7 @@ module.exports = (env) => {
         {
           // test: que tipo de archivo quiero reconocer,
           // use: que loader se va a encargar del archivo
-          test: /\.(js|jsx)$/,
-          exclude: /(node_modules)/,
+          test: /\.(js|jsx)$/, 
           use: {
             loader: 'babel-loader',
             options: {
@@ -67,7 +95,7 @@ module.exports = (env) => {
           use: {
             loader: 'url-loader',
             options: {
-              limit: 10000,
+              limit: 50000,
               fallback: 'file-loader',
               name: 'images/[name].[hash].[ext]',
             }

@@ -7,6 +7,7 @@ function Loader(props) {
         alt,
         size
     } = props
+    
     return (
         <div className="Loader">
             <img

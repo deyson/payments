@@ -38,7 +38,7 @@ class AddCard extends Component {
         var myCard = $('#my-card');
         var cardToSave = myCard.PaymentezForm('card');
         if (cardToSave == null) {
-            alert("Invalid Card Data");
+            alert("Datos de tarjeta inválidos");
             return;
         }
 

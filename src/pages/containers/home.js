@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import HomeLayout from '../components/home-layout';
-import ModalContainer from '../../widgets/containers/modal';
-import Modal from '../../widgets/components/modal';
 import HandleError from '../../error/containers/handle-error';
 import AddCard from '../../payments/containers/add-card'
 import VerifyCard from '../../payments/containers/verify-card';
