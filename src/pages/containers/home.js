@@ -5,20 +5,24 @@ import AddCard from '../../payments/containers/add-card'
 import VerifyCard from '../../payments/containers/verify-card';
 import { CookiesProvider } from 'react-cookie';
 import ModalAwesome from 'react-awesome-modal';
+import LoaderLayout from '../../icons/components/loader-layout';
+import QueryString from 'query-string';
+import QueryStringError from '../../error/components/query-string-error';
 
 class Home extends Component {
     state = {
+        loaderVisible: false,
+        contentErrorVisible: false,
         modalVisible: false,
         uid: '',
-        transactionId: '',
+        email: '',
         skin: '',
+        transactionId: '',
     }
     handleOpenModal = (cardResponse) => {
         this.setState({
             modalVisible: true,
-            uid: cardResponse.uid,
             transactionId: cardResponse.transactionId,
-            skin: cardResponse.skin,
         })
     }
     handleCloseModal = (event) => {
@@ -26,26 +30,57 @@ class Home extends Component {
             modalVisible: false,
         })
     }
+    handleLoader = (status) => {
+        this.setState({
+            loaderVisible: status,
+        })
+    }
+    componentDidMount() {
+        const parsed = QueryString.parse(location.search);
+        this.setState({
+            contentErrorVisible: !("uid" in parsed && "email" in parsed && "skin" in parsed),
+            uid: parsed.uid,
+            email: parsed.email,
+            skin: parsed.skin
+        })
+    }
     render() {
         return (
             <CookiesProvider>
                 <HandleError>
                     <HomeLayout>
-                        <AddCard openModal={this.handleOpenModal} />
                         {
-                            <ModalAwesome
-                                visible={this.state.modalVisible}
-                                width="400"
-                                height="300"
-                                effect="fadeInUp"
-                            >
-                                <VerifyCard
-                                    uid={this.state.uid}
-                                    transactionId={this.state.transactionId}
-                                    skin={this.state.skin}
-                                    closeModal={this.handleCloseModal}
+                            this.state.contentErrorVisible ?
+                                <QueryStringError />
+                            :
+                            this.state.loaderVisible ?
+                                <LoaderLayout 
+                                    skin={this.state.skin} 
                                 />
-                            </ModalAwesome>
+                            :
+                            <div>
+                                <AddCard 
+                                    uid={this.state.uid}  
+                                    email={this.state.email}
+                                    openModal={this.handleOpenModal} 
+                                    changeLoaderStatus={this.handleLoader} 
+                                />
+                                {
+                                    <ModalAwesome
+                                        visible={this.state.modalVisible}
+                                        width="400"
+                                        height="300"
+                                        effect="fadeInUp"
+                                    >
+                                        <VerifyCard
+                                            uid={this.state.uid}
+                                            transactionId={this.state.transactionId}
+                                            closeModal={this.handleCloseModal}
+                                            changeLoaderStatus={this.handleLoader} 
+                                        />
+                                    </ModalAwesome>
+                                }
+                            </div>
                         }
                     </HomeLayout>
                 </HandleError>

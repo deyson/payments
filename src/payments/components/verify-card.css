@@ -1,6 +1,5 @@
 .VerifyCard{
     padding: 20px;
-    font-family: 'Raleway', sans-serif;
 }
 
 .VerifyCard h1{
@@ -37,24 +36,15 @@
 }
 
 .VerifyCard-button{
-    font-family: 'Raleway', sans-serif;
-    
-    border: none;
-    font-size: 16px;
+    width: 100%;
+    height: 60px;
+    font-size: 19px;
+    border-radius: 0px;
+    background-color: #32b965;
+    color: #fff;
     position: absolute;
     right: 0;
     bottom: 0;    
     left: 0;
-    width: 100%;
-    height: 42px;
-}
-
-.VerifyCard-button-carulla{
-    background-color: #8dc63f;
-    color: #fff;
-}
-
-.VerifyCard-button-exito{
-    background-color: #FCEF02;
-    color: #000;
+    cursor: pointer;
 }

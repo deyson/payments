@@ -7,7 +7,6 @@ function LoaderExito() {
     <Loader 
         src={Icon}
         alt="Cargando..."
-        size={64}
     />
   )
 }

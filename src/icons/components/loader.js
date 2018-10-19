@@ -4,8 +4,7 @@ import './loader.css';
 function Loader(props) {
     const {
         src,
-        alt,
-        size
+        alt
     } = props
     
     return (
@@ -13,8 +12,6 @@ function Loader(props) {
             <img
                 src={src}
                 alt={alt}
-                width={size}
-                height={size}
             />
         </div>
     )

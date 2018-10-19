@@ -1,5 +1,6 @@
 .AddCard{
-    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .AddCard-container{
@@ -11,29 +12,21 @@
 }
 
 .AddCard-button{
-    font-family: 'Raleway', sans-serif;
-    border: none;
-    font-size: 16px;
+    width: 100%;
+    height: 60px;
+    font-size: 19px;
+    border-radius: 0px;
+    background-color: #32b965;
+    color: #fff;
     position: absolute;
     right: 0;
     bottom: 0;    
     left: 0;
-    width: 100%;
-    height: 42px;
-}
-
-.AddCard-button-carulla{
-    background-color: #8dc63f;
-    color: #fff;
-}
-
-.AddCard-button-exito{
-    background-color: #FCEF02;
-    color: #000;
+    cursor: pointer;
 }
 
 .AddCard .paymentez-form *{
-    font-family: 'Raleway', sans-serif;
+    font-family: sans-serif;
 }
 
 .AddCard .paymentez-form .otp-label{

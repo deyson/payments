@@ -34,13 +34,6 @@ module.exports = (env) => {
           global: 'paymentez-js',
         },
         {
-          module: 'google-raleway',
-          entry: {
-            path: 'https://fonts.googleapis.com/css?family=Raleway',
-            type: 'css',
-          },
-        },
-        {
           module: 'paymentez-css',
           entry: {
             path: 'https://cdn.paymentez.com/js/ccapi/stg/paymentez.min.css',
@@ -95,7 +88,7 @@ module.exports = (env) => {
           use: {
             loader: 'url-loader',
             options: {
-              limit: 50000,
+              limit: 1000000,
               fallback: 'file-loader',
               name: 'images/[name].[hash].[ext]',
             }

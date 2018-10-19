@@ -7,7 +7,6 @@ function LoaderCarulla() {
     <Loader 
         src={Icon}
         alt="Cargando..."
-        size={64}
     />
   )
 }

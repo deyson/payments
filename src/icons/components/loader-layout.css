@@ -1,0 +1,22 @@
+.LoaderLayout{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.LoaderLayout-container{
+    height: 90px;
+    width: 90px;
+    margin: 0;
+    background-size: 55px;
+}

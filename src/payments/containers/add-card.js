@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import AddCardLayout from '../components/add-card';
-import QueryString from 'query-string';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 class AddCard extends Component {
-    state = {
-        uid: '',
-        email: '',
-        skin: '',
-        loaderVisible: false,
-    }
 
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -24,15 +17,6 @@ class AddCard extends Component {
         );
     }
 
-    componentDidMount() {
-        const parsed = QueryString.parse(location.search);
-        this.setState({
-            uid: parsed.uid,
-            email: parsed.email,
-            skin: parsed.skin
-        })
-    }
-
     handleAddCard = (event) => {
         event.preventDefault();
         var myCard = $('#my-card');
@@ -41,29 +25,23 @@ class AddCard extends Component {
             alert("Datos de tarjeta inválidos");
             return;
         }
-
+        
         Paymentez.addCard(
-            this.state.uid,
-            this.state.email,
+            this.props.uid,
+            this.props.email,
             cardToSave,
             this.successHandler,
             this.errorHandler
         );
 
-        this.setState({
-            loaderVisible: true,
-        })
+        this.props.changeLoaderStatus(true);
     }
 
     successHandler = (cardResponse) => {
-        this.setState({
-            loaderVisible: false,
-        })
+        this.props.changeLoaderStatus(false);
         if (cardResponse.card.status === 'pending') {
             this.props.openModal({
-                uid: this.state.uid,
                 transactionId: cardResponse.card.transaction_reference,
-                skin: this.state.skin,
             });
         } else {
             this.setCookie(cardResponse.card);
@@ -71,19 +49,18 @@ class AddCard extends Component {
     }
 
     errorHandler = (err) => {
-        this.setState({
-            loaderVisible: false,
-        })
+        this.props.changeLoaderStatus(false);
         this.setCookie(err.error);
     }
 
     setCookie = (response) => {
         const cardResponse = {
-            uid: this.state.uid,
+            uid: this.props.uid,
             response,
         }
         const { cookies } = this.props;
         cookies.set('cardResponse', cardResponse, { path: '/' });
+        window.location.reload();
     }
 
     render() {
@@ -91,8 +68,6 @@ class AddCard extends Component {
             <AddCardLayout 
                 handleClick={this.handleAddCard} 
                 saveTitle="Guardar" 
-                loaderVisible={this.state.loaderVisible}
-                skin={this.state.skin} 
             />
         )
     }
